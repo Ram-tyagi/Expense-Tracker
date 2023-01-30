@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>
+<body>
+   <header id="main-header" class="Expense-tracker">
+    <div class="container">
+        <h1 id="header-title">Expense Tracker</h1>
+    </div>
+   </header> 
+   <div class="container">
+    <form action="" id="my-form" onsubmit="saveToLocalStorage(event)">
+    <div>
+        <label for="Expense">Choose ExpenseAmount</label>
+        <input type="text" id="Expense" name="amount" required>
+    </div>
+    <div>
+        <label for="desciption">Choose Description </label>
+        <input type="text" id="description" name="descriptionOfExpense" required>
+    </div>
+    <div>
+        <label for="category">Choose A Category</label>
+        <select name="categoryofExpense" id="category">
+            <option value="Movie">Movie</option>
+            <option value="Popcorn">Popcorn</option>
+            <option value="Food">Food</option>
+            <option value="Fuel">Fuel</option>
+          </select>
+    </div>
+    <input class="btn" type="submit" value="Add Expense">
+     <ul id="listOfItems"></ul>
+    </form>
+</div>
+   <script>
+    function saveToLocalStorage(event){
+            event.preventDefault();
+            const ExpenseAmount=event.target.amount.value;
+            const Description=event.target.descriptionOfExpense.value;
+            const Category=event.target.categoryofExpense.value;
+            
+            
+            const obj={
+               ExpenseAmount,
+               Description,
+               Category
+            }
+            localStorage.setItem('ExpenseTracker', JSON.stringify(obj));
+            showUserOnScreen(obj)
+          
+        }
+        function showUserOnScreen(obj){
+            const parentEle=document.getElementById('listOfItems')
+            const childEle=document.createElement('li')
+            childEle.textContent=obj.ExpenseAmount+'-'+obj.Description+'-'+obj.Category
+            parentEle.appendChild(childEle)
+        
+
+         const deleteButton=document.createElement('input') 
+         deleteButton.type="button"
+         deleteButton.value="delete Expense"
+         deleteButton.onclick=()=>{
+           
+            
+         }
+         childEle.appendChild(deleteButton)
+         parentEle.appendChild(childEle)
+         
+         const editButton=document.createElement('input') 
+         editButton.type="button"
+         editButton.value="edit Expense"
+        editButton.onclick=()=>{
+          
+           
+            document.getElementById('ExpenseAmountInputTag').value=obj.ExpenseAmount
+            document.getElementById('DescriptionInputTag').value=obj.Description
+            document.getElementById('CategoryInputTag').value=obj.Category
+         }
+         childEle.appendChild(deleteButton)
+         childEle.appendChild(editButton)
+         parentEle.appendChild(childEle)
+         
+        }
+   </script>
+</body>
+</html>
